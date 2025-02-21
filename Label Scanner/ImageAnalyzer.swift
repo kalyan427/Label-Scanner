@@ -40,6 +40,11 @@ class ImageAnalyzer: ObservableObject {
             let recognizedStrings = observations.compactMap { observation in
                 observation.topCandidates(1).first?.string
             }
+            
+            DispatchQueue.main.async {
+                self.recognizedText = recognizedStrings.joined(separator: "\n")
+                self.isProcessing = false
+            }
         }
         
         textRequest.recognitionLevel = .accurate
